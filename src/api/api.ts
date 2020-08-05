@@ -1,4 +1,4 @@
-import { taskEither as TS } from "fp-ts";
+import { taskEither as TE } from "fp-ts";
 import { identity } from "fp-ts/lib/function";
 import { BusinessesApi, Business } from "../models/domain";
 import { pipe } from "fp-ts/lib/pipeable";
@@ -8,10 +8,10 @@ function getApiCall<T>(
   relativeUrl: string,
   params: object,
   decoder: Type<T>
-): TS.TaskEither<unknown, TypeOf<typeof decoder>> {
+): TE.TaskEither<unknown, TypeOf<typeof decoder>> {
   const query = new URLSearchParams(params as any).toString();
   return pipe(
-    TS.tryCatch(
+    TE.tryCatch(
       () =>
         fetch(
           `${process.env.REACT_APP_YELP_BASE_API_URL}${relativeUrl}${
@@ -25,25 +25,25 @@ function getApiCall<T>(
         ),
       identity
     ),
-    TS.fold(
-      (error) => TS.left(error),
-      (res) => TS.tryCatch(() => res.json(), identity)
+    TE.fold(
+      (error) => TE.left(error),
+      (res) => TE.tryCatch(() => res.json(), identity)
     ),
-    TS.fold(
-      (error) => TS.left(error),
-      (res) => TS.fromEither(decoder.decode(res))
+    TE.fold(
+      (error) => TE.left(error),
+      (res) => TE.fromEither(decoder.decode(res))
     )
   );
 }
 
 export function getBusinessesList(
   location: string
-): TS.TaskEither<unknown, Business[]> {
+): TE.TaskEither<unknown, Business[]> {
   return pipe(
     getApiCall("businesses/search", { location }, BusinessesApi),
-    TS.fold(
-      (error) => TS.left(error),
-      (res) => TS.right(res.businesses)
+    TE.fold(
+      (error) => TE.left(error),
+      (res) => TE.right(res.businesses)
     )
   );
 }

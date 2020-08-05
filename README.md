@@ -12,6 +12,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+This command will also start a proxy to fix a CORS issue with the yelp API. To stop the proxy run `yarn stop-cors-proxy`
 
 ### `yarn build`
 

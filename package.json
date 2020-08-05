@@ -26,9 +26,11 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "yarn stop-cors-proxy && yarn start-cors-proxy && react-app-rewired start",
     "build": "react-app-rewired build",
-    "prettier-write": "prettier --parser=typescript \"{**/*,*}.{js,jsx,ts,tsx}\" --write && prettier --parser=css \"{**/*,*}.css\" --write"
+    "prettier-write": "prettier --parser=typescript \"{**/*,*}.{js,jsx,ts,tsx}\" --write && prettier --parser=css \"{**/*,*}.css\" --write",
+    "start-cors-proxy": "docker run -p 3001:8080 --name cors-anywhere -d redocly/cors-anywhere",
+    "stop-cors-proxy": "docker stop cors-anywhere || true && docker rm cors-anywhere || true"
   },
   "eslintConfig": {
     "extends": "react-app"

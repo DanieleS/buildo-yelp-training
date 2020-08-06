@@ -5,6 +5,10 @@ export const Business = t.interface({
   name: t.string,
   image_url: t.string,
   url: t.string,
+  rating: t.number,
+  review_count: t.number,
+  price: t.union([t.string, t.undefined]),
+  phone: t.string,
   categories: t.array(
     t.interface({
       title: t.string,

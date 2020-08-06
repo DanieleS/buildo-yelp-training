@@ -2,13 +2,9 @@ import { taskEither as TE } from "fp-ts";
 import { identity } from "fp-ts/lib/function";
 import { BusinessesApi, Business } from "../models/domain";
 import { pipe } from "fp-ts/lib/pipeable";
-import { Type, TypeOf } from "io-ts";
+import { Type } from "io-ts";
 
-function getApiCall<T>(
-  relativeUrl: string,
-  params: object,
-  decoder: Type<T>
-): TE.TaskEither<unknown, TypeOf<typeof decoder>> {
+function getApiCall<T>(relativeUrl: string, params: object, decoder: Type<T>) {
   const query = new URLSearchParams(params as any).toString();
   return pipe(
     TE.tryCatch(
@@ -25,14 +21,8 @@ function getApiCall<T>(
         ),
       identity
     ),
-    TE.fold(
-      (error) => TE.left(error),
-      (res) => TE.tryCatch(() => res.json(), identity)
-    ),
-    TE.fold(
-      (error) => TE.left(error),
-      (res) => TE.fromEither(decoder.decode(res))
-    )
+    TE.chain((res) => TE.tryCatch(() => res.json(), identity)),
+    TE.chainW((res) => TE.fromEither(decoder.decode(res)))
   );
 }
 
@@ -41,9 +31,6 @@ export function getBusinessesList(
 ): TE.TaskEither<unknown, Business[]> {
   return pipe(
     getApiCall("businesses/search", { location }, BusinessesApi),
-    TE.fold(
-      (error) => TE.left(error),
-      (res) => TE.right(res.businesses)
-    )
+    TE.map((res) => res.businesses)
   );
 }

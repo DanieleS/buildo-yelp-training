@@ -26,11 +26,12 @@ function getApiCall<T>(relativeUrl: string, params: object, decoder: Type<T>) {
   );
 }
 
-export function getBusinessesList(
-  location: string
-): TE.TaskEither<unknown, Business[]> {
+export function getBusinessesList(params: {
+  location: string;
+  term?: string;
+}): TE.TaskEither<unknown, Business[]> {
   return pipe(
-    getApiCall("businesses/search", { location }, BusinessesApi),
+    getApiCall("businesses/search", params, BusinessesApi),
     TE.map((res) => res.businesses)
   );
 }

@@ -1,4 +1,5 @@
 import { Style } from "treat/lib/types";
+import { primaryColor } from "./colors";
 
 export const resetList: Style = {
   listStyle: "none",

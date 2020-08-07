@@ -2,6 +2,7 @@ import * as t from "io-ts";
 
 export const Business = t.interface({
   id: t.string,
+  alias: t.string,
   name: t.string,
   image_url: t.string,
   url: t.string,

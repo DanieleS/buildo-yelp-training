@@ -1,7 +1,12 @@
 import { available, queryShallow } from "avenger";
-import { getBusinessesList } from "../api/api";
+import { getBusinessesList, getBusinessesDetails } from "../api/api";
 
 export const businessListQuery = queryShallow(
     getBusinessesList,
+    available
+)
+
+export const businessDetailsQuery = queryShallow(
+    getBusinessesDetails,
     available
 )

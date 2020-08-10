@@ -5,6 +5,7 @@ import { useQuery } from "avenger/lib/react";
 import { currentView } from "../../navigation";
 import "./App.treat";
 import { pipe } from "fp-ts/lib/function";
+import BusinessDetailView from "../BusinessDetailsView/BusinessDetailView";
 
 function App() {
   const view = useQuery(currentView);
@@ -18,7 +19,7 @@ function App() {
           case "home":
             return <BusinessListView />;
           case "itemView":
-            return <>{view.itemAlias}</>;
+            return <BusinessDetailView alias={view.itemAlias} />;
         }
       }
     )

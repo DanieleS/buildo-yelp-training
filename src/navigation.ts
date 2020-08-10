@@ -1,7 +1,7 @@
 import { getCurrentView, getDoUpdateCurrentView, HistoryLocation } from "avenger/lib/browser";
  
 export type CurrentView = 
-  | { view: 'itemView', itemAlias: String }
+  | { view: 'itemView', itemAlias: string }
   | { view: 'home' };
  
 const itemViewRegex = /^\/(.+)$/;

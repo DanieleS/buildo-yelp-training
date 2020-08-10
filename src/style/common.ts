@@ -1,5 +1,6 @@
 import { Style } from "treat/lib/types";
 import { primaryColor } from "./colors";
+import { defaultSpacing } from "./constants";
 
 export const resetList: Style = {
   listStyle: "none",
@@ -20,4 +21,14 @@ export const absoluteCenterElement: Style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+};
+
+export const rightSeparator: Style = {
+  ":after": {
+    content: "'●'",
+    fontSize: 10,
+    lineHeight: "clamp(13px, 2vw, 20px)",
+    display: "inline-block",
+    margin: `0 ${defaultSpacing}px`,
+  },
 };

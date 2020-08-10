@@ -1,6 +1,6 @@
 import { taskEither as TE } from "fp-ts";
 import { identity } from "fp-ts/lib/function";
-import { BusinessesApi, Business } from "../models/domain";
+import { BusinessesApi, Business, BusinessDetails } from "../models/domain";
 import { pipe } from "fp-ts/lib/pipeable";
 import { Type } from "io-ts";
 
@@ -34,4 +34,10 @@ export function getBusinessesList(params: {
     getApiCall("businesses/search", params, BusinessesApi),
     TE.map((res) => res.businesses)
   );
+}
+
+export function getBusinessesDetails(
+  alias: string
+): TE.TaskEither<unknown, BusinessDetails> {
+  return getApiCall(`businesses/${alias}`, {}, BusinessDetails);
 }

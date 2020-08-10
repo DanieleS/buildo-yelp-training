@@ -2,9 +2,15 @@ import { style } from "treat";
 import { defaultSpacing } from "../../style/constants";
 import { title } from "../../style/typography";
 
-export const item = style({
+export const linkWrapper = style({
+  display: "block",
+  color: "#000000",
+  textDecoration: "none",
   maxWidth: 1024,
   margin: "auto",
+});
+
+export const item = style({
   display: "flex",
 });
 
